@@ -1,0 +1,40 @@
+<?php
+    
+    /**
+     *	Facebook page Gallery plugin
+     *
+     *	@package Monstra
+     *	@subpackage Plugins
+     *	@author Graeme Moss / Gambi
+     *	@copyright 2014 Graeme Moss / Gambi
+     *	@version 1.0.0
+     *
+     */
+
+
+    // Register plugin
+    Plugin::register( __FILE__,
+        __('Facebook page Gallery'),
+        __('Facebook page Gallery plugin for Monstra.'),
+        '1.0.0',
+        'Gambi',
+        'http://www.gambi.co.za');
+
+    class monstra_cms_fb_gallery extends Frontend{
+        
+        /**
+        * Get Albums
+        *  <code>
+        *      
+        *  </code>
+        *
+        * @return string
+        */
+        public static function getalbum(){
+          return  View::factory('minishop/views/frontend/album')
+                  ->assign('last', $last)
+                  ->display();
+        }
+        
+        
+    }
