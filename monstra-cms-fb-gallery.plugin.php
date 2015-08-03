@@ -45,7 +45,7 @@
             echo ('<style type="text/css">
                     .post-content {
                         margin: 0 auto;
-                        margin-top: -30px;
+                        margin-top: -20px;
                         text-align:center
                         position: relative;
                     }
@@ -146,23 +146,25 @@
             {
                 if(!empty($json_array['data'][$x]['object_id']) AND $json_array['data'][$x]['size'] > 0) // do not include empty albums
                 {
-                    $gallery .= '
-                        <div class="col-sm-3 wrapper">
-                            <a href="?id='.$json_array['data'][$x]['aid'].'&title='.urlencode($json_array['data'][$x]['name']).'" rel="tooltip" data-placement="bottom" title="'.$json_array['data'][$x]['name'].' ('.$json_array['data'][$x]['size'].')">
-                            <img class="img-responsive img-thumbnail" src="http://graph.facebook.com/'.$json_array['data'][$x]['object_id'].'/picture?type=album"> 
-                            <div class="caption post-content">
+                    if ($json_array['data'][$x]['name'] != "Cover Photos"){
+                        $gallery .= '
+                            <div class="col-sm-3 wrapper">
+                                <a href="?id='.$json_array['data'][$x]['aid'].'&title='.urlencode($json_array['data'][$x]['name']).'" rel="tooltip" data-placement="bottom" title="'.$json_array['data'][$x]['name'].' ('.$json_array['data'][$x]['size'].')">
+                                <img class="img-responsive img-thumbnail" src="http://graph.facebook.com/'.$json_array['data'][$x]['object_id'].'/picture?type=album"> 
+                                <div class="caption post-content">
 
-                                <h3>'.$json_array['data'][$x]['name'].'</h3>
+                                    <h3>'.$json_array['data'][$x]['name'].'</h3>
+
+                                </div>
+                                </a>
 
                             </div>
-                            </a>
-
-                        </div>
-                    ';
+                        ';
+                    }
                 }
 
             }
-            $gallery = '<div class="row"><div class="col-sm-12 thumbnail">'.$gallery.'</div></div>';
+            $gallery = '<div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
 /*
             if($this->breadcrumbs != 'n'){
                 $crumbs = array('Gallery' => $_SERVER['PHP_SELF']);
