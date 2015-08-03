@@ -45,7 +45,7 @@
             echo ('<style type="text/css">
                     .post-content {
                         margin: 0 auto;
-                        margin-top: -20px;
+                        margin-top: 0px;
                         text-align:center
                         position: relative;
                     }
@@ -153,7 +153,7 @@
                                 <img class="img-responsive img-thumbnail" src="http://graph.facebook.com/'.$json_array['data'][$x]['object_id'].'/picture?type=album"> 
                                 <div class="caption post-content">
 
-                                    <h3>'.$json_array['data'][$x]['name'].'</h3>
+                                    <p>'.$json_array['data'][$x]['name'].'</p>
 
                                 </div>
                                 </a>
@@ -164,7 +164,7 @@
                 }
 
             }
-            $gallery = '<div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
+            $gallery = '<div class="row"><div class="col-sm-12"><h2>Gallery</h2></div></div><div class="row">'.$gallery.'</div>';
 /*
             if($this->breadcrumbs != 'n'){
                 $crumbs = array('Gallery' => $_SERVER['PHP_SELF']);
