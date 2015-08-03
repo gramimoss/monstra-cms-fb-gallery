@@ -20,23 +20,53 @@
         'Gambi',
         'http://www.gambi.co.za',
         'fb_gallery');
-
+    
+    
     class fb_gallery extends Frontend{
         
         public static $id = "";
         
         
-        /**
-        * Get Albums
-        *  <code>
-        *      
-        *  </code>
-        *
-        * @return string
-        */
-        public static function getalbum(){
-
+        public static function theme_footer() {
+            echo ('<script src="'.site::url(). DS .'plugins'. DS .'monstra-cms-fb-gallery/lib/ekko-lightbox.min.js"></script>');   
+            echo ('<script type="text/javascript">
+                    $(document).ready(function ($) {
+                        $(document).delegate(\'*[data-toggle="lightbox"]\', \'click\', function(event) {
+                        event.preventDefault();
+                        $(this).ekkoLightbox();
+                        });
+                    });
+                    </script>
+                    ');
         }
+        
+        public static function theme_header() {
+            echo (' <link href="'.site::url(). DS .'plugins'. DS .'monstra-cms-fb-gallery'.DS.'lib/ekko-lightbox.min.css" rel="stylesheet">');    
+            echo ('<style type="text/css">
+                    .post-content {
+                        margin: 0 auto;
+                        margin-top: -30px;
+                        text-align:center
+                        position: relative;
+                    }
+                    .thumbnail {
+                        margin:0 auto;
+                        text-align:center;
+                    }
+
+                    .wrapper {
+                        text-align:center;
+                        padding:0;
+                    }
+                </style>');
+        }
+        
+
+        public static function main(){
+            Action::add('theme_header', 'fb_gallery::theme_header');
+            Action::add('theme_footer', 'fb_gallery::theme_footer');
+        }
+        
         
         /**
         * Set Sandbox title
@@ -56,9 +86,7 @@
          */
         public static function content()
         {
-            $last = "test";
             fb_gallery::$id = fb_gallery::getPageId("finlitsa");
-            echo '<br>'.Request::get('id');
             $id = Request::get('id');
             if(empty($id)){
                 return fb_gallery::displayAlbums();
@@ -66,9 +94,7 @@
             else{
                 return fb_gallery::displayPhotos(Request::get('id'),Request::get('title'));
             }
-            
-            
-            
+
             //return  View::factory('monstra-cms-fb-gallery/views/frontend/index')
             //        ->display();
         }
@@ -84,14 +110,13 @@
 		{
                     for($x=0; $x<$data_count; $x++)
                     {
-                        $gallery .= '<li>
-                        <a href="'.$json_array['data'][$x]['src_big'].'" rel="prettyPhoto['.$album_id.']" title="'.$json_array['data'][$x]['caption'].'" class="thumbnail">
-                        <img src="'.$json_array['data'][$x]['src'].'">
-                        </a>
-                        </li>';
+                        $gallery .= '    
+                        <a href="'.$json_array['data'][$x]['src_big'].'" data-toggle="lightbox" data-gallery="'.$album_id.'" data-footer="'.$json_array['data'][$x]['caption'].'"> 
+                        <img src="'.$json_array['data'][$x]['src'].'" class="img-responsive img-thumbnail">
+                        </a>';
                     }
-                    $gallery = '<ul class="thumbnails">'.$gallery.'</ul>';
-
+                    $gallery = '<div class="row"><div class="col-sm-12"><h2>'.$title.'</h2></div></div><div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
+                    
                     /*
                     if($this->breadcrumbs != 'n'){
                         $crumbs = array('Gallery' => $_SERVER['PHP_SELF'],
@@ -122,16 +147,22 @@
                 if(!empty($json_array['data'][$x]['object_id']) AND $json_array['data'][$x]['size'] > 0) // do not include empty albums
                 {
                     $gallery .= '
-                        <div class="col-lg-3 col-sm-4 col-6">    
-                            <a href="?id='.$json_array['data'][$x]['aid'].'&title='.urlencode($json_array['data'][$x]['name']).'" class="thumbnail" rel="tooltip" data-placement="bottom" title="'.$json_array['data'][$x]['name'].' ('.$json_array['data'][$x]['size'].')">
-                            <img class="img-responsive" src="http://graph.facebook.com/'.$json_array['data'][$x]['object_id'].'/picture?type=album">
+                        <div class="col-sm-3 wrapper">
+                            <a href="?id='.$json_array['data'][$x]['aid'].'&title='.urlencode($json_array['data'][$x]['name']).'" rel="tooltip" data-placement="bottom" title="'.$json_array['data'][$x]['name'].' ('.$json_array['data'][$x]['size'].')">
+                            <img class="img-responsive img-thumbnail" src="http://graph.facebook.com/'.$json_array['data'][$x]['object_id'].'/picture?type=album"> 
+                            <div class="caption post-content">
+
+                                <h3>'.$json_array['data'][$x]['name'].'</h3>
+
+                            </div>
                             </a>
+
                         </div>
                     ';
                 }
 
             }
-            $gallery = '<div class="row">'.$gallery.'</div>';
+            $gallery = '<div class="row"><div class="col-sm-12 thumbnail">'.$gallery.'</div></div>';
 /*
             if($this->breadcrumbs != 'n'){
                 $crumbs = array('Gallery' => $_SERVER['PHP_SELF']);
