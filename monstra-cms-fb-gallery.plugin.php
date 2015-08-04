@@ -115,7 +115,7 @@
                         <img src="'.$json_array['data'][$x]['src'].'" class="img-responsive img-thumbnail">
                         </a>';
                     }
-                    $gallery = '<div class="row"><div class="col-sm-12"><h2>'.$title.'</h2></div></div><div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
+                    $gallery = '<div class="row"><div class="col-sm-12"><h2>'.strtoupper($title).'</h2></div></div><div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
                     
                     /*
                     if($this->breadcrumbs != 'n'){
@@ -164,7 +164,7 @@
                 }
 
             }
-            $gallery = '<div class="row"><div class="col-sm-12"><h2>Gallery</h2></div></div><div class="row">'.$gallery.'</div>';
+            $gallery = '<div class="row"><div class="col-sm-12"><h2>GALLERY</h2></div></div><div class="row">'.$gallery.'</div>';
 /*
             if($this->breadcrumbs != 'n'){
                 $crumbs = array('Gallery' => $_SERVER['PHP_SELF']);
