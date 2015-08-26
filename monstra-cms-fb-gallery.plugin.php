@@ -124,7 +124,7 @@
 
         public static function displayPhotos($album_id,$title='Photos')
     	{
-    		    Cache::configure('cache_time', 43200);
+            Cache::configure('cache_time', 43200);
             $photocache = array();
             $json_array = array();
             $photocache = Cache::get('fb_gallery',$album_id);
@@ -170,7 +170,6 @@
 
         public static function displayAlbums()
 	{
-            //$this->loadCache(fb_gallery::$id); // loads cached file
             Cache::configure('cache_time', 43200);
             $albumcache = array();
             $json_array = array();
