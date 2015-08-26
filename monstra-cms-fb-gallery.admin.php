@@ -57,6 +57,8 @@ class fb_galleryAdmin extends Backend
     /**
      * Form Component Save
      */
+
+    
     public static function formComponentSave()
     {
         if (Request::post('sandbox_component_save')) {
