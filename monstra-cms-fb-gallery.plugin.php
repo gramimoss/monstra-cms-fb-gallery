@@ -32,7 +32,7 @@
 
         public static $fb_id = "";
         public static $un_num = "";
-        public static $page_name = "";
+        public static $page_name = "XGames";
 
         public static function _shortcode($attributes) {
 
@@ -85,11 +85,8 @@
             fb_gallery::$un_num = rand(00000,99999);
             fb_gallery::theme_header();
             Action::add('theme_footer', 'fb_gallery::theme_footer');
-            if (!empty(fb_gallery::$page_name)){
-              fb_gallery::$fb_id = fb_gallery::getPageId(fb_gallery::$page_name);
-            } else {
-              fb_gallery::$fb_id = fb_gallery::getPageId("finlitsa");
-            }
+            fb_gallery::$fb_id = fb_gallery::getPageId(fb_gallery::$page_name);
+           
 
         }
 
