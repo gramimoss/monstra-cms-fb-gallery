@@ -56,6 +56,9 @@
                     ');
         }
 
+
+
+
         public static function theme_header() {
             echo (' <link href="'.site::url(). DS .'plugins'. DS .'monstra-cms-fb-gallery'.DS.'lib/ekko-lightbox.min.css" rel="stylesheet">');
             echo ('<style type="text/css">
@@ -137,26 +140,26 @@
                 $json_array = fb_gallery::getData($album_id,$type='photos');
                 Cache::put('fb_gallery',$album_id,$json_array['data']);
             }
-        $data_count = count($json_array['data']);
+            $data_count = count($json_array['data']);
     		if($data_count > 0)
     		{
-                        for($x=0; $x<$data_count; $x++)
-                        {
-                            $gallery .= '
-                            <a href="'.$json_array['data'][$x]['src_big'].'" data-toggle="lightbox" data-gallery="'.$album_id.'" data-footer="'.$json_array['data'][$x]['caption'].'">
-                            <img src="'.$json_array['data'][$x]['src'].'" class="img-responsive img-thumbnail">
-                            </a>';
-                        }
-                        $gallery = '<div class="row"><div class="col-sm-12"><h2>'.$title.'</h2></div></div><div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
+                for($x=0; $x<$data_count; $x++)
+                {
+                    $gallery .= '
+                    <a href="'.$json_array['data'][$x]['src_big'].'" data-toggle="lightbox" data-gallery="'.$album_id.'" data-footer="'.$json_array['data'][$x]['caption'].'">
+                    <img src="'.$json_array['data'][$x]['src'].'" class="img-responsive img-thumbnail">
+                    </a>';
+                }
+                $gallery = '<div class="row"><div class="col-sm-12"><h2>'.$title.'</h2></div></div><div class="row"><div class="col-sm-12">'.$gallery.'</div></div>';
 
-                        /*
-                        if($this->breadcrumbs != 'n'){
-                            $crumbs = array('Gallery' => $_SERVER['PHP_SELF'],
-                            $title => '');
-                            $gallery = $this->addBreadCrumbs($crumbs).$gallery;
-                        }
-                         *
-                         */
+                /*
+                if($this->breadcrumbs != 'n'){
+                    $crumbs = array('Gallery' => $_SERVER['PHP_SELF'],
+                    $title => '');
+                    $gallery = $this->addBreadCrumbs($crumbs).$gallery;
+                }
+                 *
+                 */
     		}
     		else{$gallery = 'no photos in this gallery';}
 
@@ -169,7 +172,7 @@
 
 
         public static function displayAlbums()
-	{
+    	{
             Cache::configure('cache_time', 43200);
             $albumcache = array();
             $json_array = array();
@@ -215,10 +218,10 @@
             $this->saveCache($this->id,$gallery); // saves cached HTML file
 */
             return $gallery;
-	}
+    	}
 
         public static function getPageId($string)
-	{
+    	{
             /**
             * Checks to see if page id is vaild
             */
@@ -232,10 +235,10 @@
 
             if(isset($json_array['data'][0]['page_id'])){return $json_array['data'][0]['page_id'];}
             else{die('invalid page id or name');}
-	}
+    	}
 
         public static function getData($id,$type='')
-	{
+    	{
             /**
             * Sends each request Facebook (currently only for 'albums' and 'photos')
             */
@@ -250,6 +253,6 @@
                     return $json_array;
             }
             else{return 'id was empty';}
-	}
+    	}
 
     }
