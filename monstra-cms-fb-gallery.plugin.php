@@ -18,8 +18,7 @@
         __('Facebook page Gallery plugin for Monstra.'),
         '1.0.0',
         'Gambi',
-        'http://www.gambi.co.za',
-        'fb_gallery');
+        'http://www.gambi.co.za','');
 
     if (Session::exists('user_role') && in_array(Session::get('user_role'), array('admin', 'editor'))) {
       //Plugin::admin('monstra-cms-fb-gallery');
@@ -40,7 +39,8 @@
               fb_gallery::$page_name = $attributes['page'];
           }
           fb_gallery::main();
-          echo fb_gallery::content();
+
+          return fb_gallery::content();
         }
 
         public static function theme_footer() {
@@ -86,7 +86,7 @@
             fb_gallery::theme_header();
             Action::add('theme_footer', 'fb_gallery::theme_footer');
             fb_gallery::$fb_id = fb_gallery::getPageId(fb_gallery::$page_name);
-           
+
 
         }
 
