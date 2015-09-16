@@ -44,7 +44,7 @@
         }
 
         public static function theme_footer() {
-            echo ('<script src="'.site::url(). DS .'plugins'. DS .'monstra-cms-fb-gallery/lib/ekko-lightbox.min.js"></script>');
+            echo ('<script src="'.site::url(). DS .'plugins'. DS .'monstra_cms_fb_gallery/lib/ekko-lightbox.min.js"></script>');
             echo ('<script type="text/javascript">
                     $(document).ready(function ($) {
                         $(document).delegate(\'*[data-toggle="lightbox"]\', \'click\', function(event) {
@@ -60,7 +60,7 @@
 
 
         public static function theme_header() {
-            echo (' <link href="'.site::url(). DS .'plugins'. DS .'monstra-cms-fb-gallery'.DS.'lib/ekko-lightbox.min.css" rel="stylesheet">');
+            echo (' <link href="'.site::url(). DS .'plugins'. DS .'monstra_cms_fb_gallery'.DS.'lib/ekko-lightbox.min.css" rel="stylesheet">');
             echo ('<style type="text/css">
                     .post-content'.fb_gallery::$un_num.' {
                         margin: 0 auto;
@@ -140,7 +140,7 @@
             $data_count = count($json_array['data']);
         		if($data_count > 0)
         		{
-              $gallery = View::factory('monstra-cms-fb-gallery/views/frontend/photos')
+              $gallery = View::factory('monstra_cms_fb_gallery/views/frontend/photos')
                               ->assign('photo_list', $json_array['data'])
                               ->assign('photo_count', $data_count)
                               ->assign('album_id', $album_id)
@@ -180,7 +180,7 @@
                 }
 
             }
-            $gallery = View::factory('monstra-cms-fb-gallery/views/frontend/album')
+            $gallery = View::factory('monstra_cms_fb_gallery/views/frontend/album')
                             ->assign('album_list', $data)
                             ->assign('un_num', fb_gallery::$un_num)
                             ->assign('album_count', $data_count)
@@ -211,11 +211,15 @@
             /**
             * Sends each request Facebook (currently only for 'albums' and 'photos')
             */
+            echo "$id<br>\n";
+
             if(!empty($id))
             {
                     if($type == 'photos'){$query = "SELECT src,src_big,caption FROM photo WHERE aid = '$id'";}
                     else{$query = "SELECT aid,object_id,name,size,type FROM album WHERE owner = '$id' ORDER BY modified DESC";}
                     $url = 'https://graph.facebook.com/fql?q='.rawurlencode($query).'&format=json-strings';
+                    echo "$url<br>\n";
+
                     $curlopts = array(CURLOPT_HEADER => '0', CURLOPT_RETURNTRANSFER => '1');
                     $return_data = Curl::get($url, $curlopts);
                     $json_array = json_decode($return_data,true);
