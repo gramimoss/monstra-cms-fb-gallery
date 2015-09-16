@@ -211,14 +211,12 @@
             /**
             * Sends each request Facebook (currently only for 'albums' and 'photos')
             */
-            echo "$id<br>\n";
 
             if(!empty($id))
             {
                     if($type == 'photos'){$query = "SELECT src,src_big,caption FROM photo WHERE aid = '$id'";}
                     else{$query = "SELECT aid,object_id,name,size,type FROM album WHERE owner = '$id' ORDER BY modified DESC";}
                     $url = 'https://graph.facebook.com/fql?q='.rawurlencode($query).'&format=json-strings';
-                    echo "$url<br>\n";
 
                     $curlopts = array(CURLOPT_HEADER => '0', CURLOPT_RETURNTRANSFER => '1');
                     $return_data = Curl::get($url, $curlopts);
